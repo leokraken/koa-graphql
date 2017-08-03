@@ -95,7 +95,7 @@ function graphqlHTTP(options: Options): Middleware {
     throw new Error('GraphQL middleware requires options.');
   }
 
-  return async function middleware(ctx): Promise<void> {
+  return async function middleware(ctx, next): Promise<void> {
     const req = ctx.req;
     const request = ctx.request;
     const response = ctx.response;
@@ -295,6 +295,7 @@ function graphqlHTTP(options: Options): Middleware {
       response.type = 'application/json';
       response.body = payload;
     }
+    return next();
   };
 }
 
