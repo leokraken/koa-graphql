@@ -8,6 +8,8 @@ var _graphql = require('graphql');
 
 var _expressGraphql = require('express-graphql');
 
+var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
+
 var _httpErrors = require('http-errors');
 
 var _httpErrors2 = _interopRequireDefault(_httpErrors);
@@ -16,11 +18,7 @@ var _renderGraphiQL = require('./renderGraphiQL');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Middleware for express; takes an options object or function as input to
- * configure behavior, and returns an express middleware.
- */
-
+var getGraphQLParams = _expressGraphql2.default.getGraphQLParams;
 
 /**
  * Used to configure the graphqlHTTP middleware by providing a schema
@@ -28,6 +26,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * Options can be provided as an Object, a Promise for an Object, or a Function
  * that returns an Object or a Promise for an Object.
+ */
+
+/**
+ * Middleware for express; takes an options object or function as input to
+ * configure behavior, and returns an express middleware.
  */
 module.exports = graphqlHTTP;
 function graphqlHTTP(options) {
@@ -63,7 +66,7 @@ function graphqlHTTP(options) {
       // the asynchronous process below.
 
       // Resolve the Options to get OptionsData.
-      var optionsData = await Promise.resolve(typeof options === 'function' ? options(request, response, ctx) : options);
+      var optionsData = await (typeof options === 'function' ? options(request, response, ctx) : options);
 
       // Assert that optionsData is in fact an Object.
       if (!optionsData || (typeof optionsData === 'undefined' ? 'undefined' : (0, _typeof3.default)(optionsData)) !== 'object') {
@@ -99,7 +102,7 @@ function graphqlHTTP(options) {
       req.body = req.body || request.body;
 
       // Parse the Request to get GraphQL request parameters.
-      var params = await (0, _expressGraphql.getGraphQLParams)(req);
+      var params = await getGraphQLParams(req);
 
       // Get GraphQL params from the request and POST body data.
       query = params.query;
@@ -112,7 +115,7 @@ function graphqlHTTP(options) {
         // a result, otherwise return a 400: Bad Request.
         if (!query) {
           if (showGraphiQL) {
-            resolve(null);
+            return resolve(null);
           }
           throw (0, _httpErrors2.default)(400, 'Must provide query string.');
         }
@@ -126,7 +129,7 @@ function graphqlHTTP(options) {
         } catch (syntaxError) {
           // Return 400: Bad Request if any syntax errors errors exist.
           response.status = 400;
-          resolve({ errors: [syntaxError] });
+          return resolve({ errors: [syntaxError] });
         }
 
         // Validate AST, reporting any errors.
@@ -134,7 +137,7 @@ function graphqlHTTP(options) {
         if (validationErrors.length > 0) {
           // Return 400: Bad Request if any validation errors exist.
           response.status = 400;
-          resolve({ errors: validationErrors });
+          return resolve({ errors: validationErrors });
         }
 
         // Only query operations are allowed on GET requests.
@@ -146,7 +149,7 @@ function graphqlHTTP(options) {
             // provide it to GraphiQL so that the requester may perform it
             // themselves if desired.
             if (showGraphiQL) {
-              resolve(null);
+              return resolve(null);
             }
 
             // Otherwise, report a 405: Method Not Allowed error.

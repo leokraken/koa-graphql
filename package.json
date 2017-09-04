@@ -1,6 +1,6 @@
 {
   "name": "koa-graphql",
-  "version": "0.7.1",
+  "version": "0.7.3",
   "description": "Production ready GraphQL Koa middleware.",
   "contributors": [
     "Lee Byron <lee@leebyron.com> (http://leebyron.com/)",
@@ -68,9 +68,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
-    "express-graphql": "^0.6.6",
+    "express-graphql": "^0.6.11",
     "http-errors": "^1.6.1",
-    "prettier": "^1.3.1",
     "thenify": "^3.2.1"
   },
   "devDependencies": {
@@ -82,25 +81,26 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
-    "babel-runtime": "^6.23.0",
-    "chai": "^3.5.0",
+    "babel-runtime": "^6.25.0",
+    "chai": "^4.1.1",
     "co-body": "^5.1.1",
     "coveralls": "^2.13.1",
-    "eslint": "3.19.0",
-    "eslint-plugin-flowtype": "2.33.0",
-    "flow-bin": "^0.47.0",
-    "graphql": "0.10.0",
+    "eslint": "^4.4.1",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "flow-bin": "^0.52.0",
+    "graphql": "^0.11.2",
     "isparta": "^4.0.0",
     "koa": "^2.2.0",
     "koa-mount": "^3.0.0",
     "koa-session": "^5.0.0",
-    "mocha": "^3.4.2",
+    "mocha": "^3.5.0",
     "multer": "^1.3.0",
+    "prettier": "^1.3.1",
     "raw-body": "^2.2.0",
-    "sane": "^1.7.0",
-    "supertest": "3.0.0"
+    "sane": "^2.0.0",
+    "supertest": "^3.0.0"
   },
   "peerDependencies": {
-    "graphql": "^0.10.0"
+    "graphql": "^0.10.0 || ^0.11.0"
   }
 }
